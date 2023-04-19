@@ -20,7 +20,7 @@ if response.ok:
         links.append(link)
         print(links)
         ####
-        links.append('http://books.toscrape.com/' + link)
+        links.append('http://books.toscrape.com/' + link)+
 
     print(links)
 

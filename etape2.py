@@ -7,11 +7,11 @@ url = 'https://books.toscrape.com/catalogue/a-light-in-the-attic_1000/index.html
 response = requests.get(url)
 data = BeautifulSoup(response.text, 'lxml')
 title = data.find('h1')
-# print(title.text)
+print(title.text)
 price = data.find('p', {'class':'price_color'})
-# print(price.text)
+print(price.text)
 instock = data.find('p', {'class':'instock'})
-# print(instock.text)
+print(instock.text)
 
 #### Étape 2 : Extraire les données d’un seul produit ####
 
@@ -19,9 +19,9 @@ headersArray = numpy.array([])
 dataArray = numpy.array([])
 # print(headersArray)
 
-titles = data.find_all('th')
-for title in titles:
-    headersArray = numpy.append(headersArray, title.text)
+headers = data.find_all('th')
+for header in headers:
+    headersArray = numpy.append(headersArray, header.text)
 
 datas = data.find_all('td')
 print(datas)
