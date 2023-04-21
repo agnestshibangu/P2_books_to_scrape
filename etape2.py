@@ -28,11 +28,22 @@ print(datas)
 for data in datas:
     dataArray = numpy.append(dataArray, data.text)
 
-print(headersArray)
-print(dataArray)
+print(len(headersArray))
+print(len(dataArray))
 
-table = {'headers' : headersArray, 'rows' : dataArray }
-df = pandas.DataFrame(data=table)
+### méthode qui retourne le mauvais format ###
+
+# table = {'headers' : headersArray, 'rows' : dataArray }
+# df = pandas.DataFrame(dataArray, headersArray)
+# print(df)
+# df.to_csv("df.csv", encoding='utf-8', sep=',', columns=headersArray)
+
+###
+
+
+# df = pandas.DataFrame([['Sacramento', 'California'], ['Miami', 'Florida']], columns=header)
+# avec mon code #
+df = pandas.DataFrame([dataArray], columns=[headersArray])
+#
 print(df)
 df.to_csv("df.csv", encoding='utf-8', sep=',', index=False)
-

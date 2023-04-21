@@ -4,6 +4,7 @@ import numpy
 import pandas
 
 #### Étape 3 : Extraire toutes les données des produits d’une catégorie ####
+#### convention de nommage, plusieurs fichiers avec intitulé catégorie #### 
 
 url = 'http://books.toscrape.com/'
 
@@ -17,12 +18,12 @@ if response.ok:
     for db in dbs:
         a = db.find('a')
         link = a['href']
-        links.append(link)
-        print(links)
-        ####
-        links.append('http://books.toscrape.com/' + link)+
-
+        links.append('http://books.toscrape.com/' + link)
+        print(link)
     print(links)
+   
+
+
 
 
 
