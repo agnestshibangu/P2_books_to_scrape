@@ -46,4 +46,4 @@ print(len(dataArray))
 df = pandas.DataFrame([dataArray], columns=[headersArray])
 #
 print(df)
-df.to_csv("df.csv", encoding='utf-8', sep=',', index=False)
+df.to_csv("etape2.csv", encoding='utf-8', sep=',', index=False)
