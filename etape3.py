@@ -21,14 +21,12 @@ url = 'https://books.toscrape.com/catalogue/a-light-in-the-attic_1000/index.html
 response = requests.get(url)
 data = BeautifulSoup(response.text, 'lxml') 
 
-headersArray = numpy.array([])
+headersArray = []
 
 headers = data.find_all('th')
 for header in headers:
-    headersArray = numpy.append(headersArray, header.text)
-
-print(len(headersArray)) 
-print(headersArray) 
+    headersArray.append(header.text)
+print(headersArray)
 
 ###
 
@@ -37,7 +35,6 @@ url = 'https://books.toscrape.com/catalogue/category/books/art_25/index.html'
 response = requests.get(url)
 # print(response)
 
-headersArray = numpy.array([])
 rowsArray = numpy.array([])
 booksdata = []
 
@@ -69,18 +66,20 @@ if response.ok:
        
             for td in tds:
                 singlebookdata.append(td.text)
-            print(singlebookdata)
-            booksdata.append(singlebookdata)  
+
+            data = singlebookdata
+            data = dict(zip(headersArray, singlebookdata))
+            booksdata.append(data)
+            #print(data)
 print(booksdata)
 
 
-# with open('names.csv', 'w', newline='') as csvfile:
-#     fieldnames = tupleheader
-#     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-#     writer.writeheader()
-#     for td in tds:
-#         singlebookdata = numpy.append(singlebookdata, td.text)
-#     writer.writerow([singlebookdata])
+with open('names.csv', 'w', newline='') as csvfile:
+    fieldnames = headersArray
+    writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+    writer.writeheader()
+    for book in booksdata:
+        writer.writerow(book)
 
 
 
