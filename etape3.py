@@ -20,7 +20,7 @@ print(headersArray)
 
 ###
 
-url = 'https://books.toscrape.com/catalogue/category/books/art_25/index.html'
+url = 'https://books.toscrape.com/catalogue/category/books/erotica_50/index.html'
 
 response = requests.get(url)
 
@@ -42,7 +42,6 @@ if response.ok:
             response = requests.get(url)
         if response.ok:
             soup = BeautifulSoup(response.text, 'lxml')
-
 
             tds = soup.find_all('td')
             singlebookdata = []
