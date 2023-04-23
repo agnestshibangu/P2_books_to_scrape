@@ -20,7 +20,7 @@ print(headersArray)
 
 ###
 
-url = 'https://books.toscrape.com/catalogue/category/books/erotica_50/index.html'
+url = 'https://books.toscrape.com/catalogue/category/books/art_25/index.html'
 
 response = requests.get(url)
 

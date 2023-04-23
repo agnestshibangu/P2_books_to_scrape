@@ -58,96 +58,40 @@ for linkcategory in linkscategory:
         books = []
         datapage = BeautifulSoup(response.text, 'lxml') # single CATEGORY page
         titleCat = datapage.find('h1')
+        print('/////////////////////////////////////////////////')
+        print('category name')
         print(titleCat)
+
         
-        singlebooklinks = datapage.find_all('h3') # retrieve all book titles from a category
-        
+        # retrieve all book titles from a category
+        singlebooklinks = datapage.find_all('h3') 
         for singlebooklink in singlebooklinks:
             a = singlebooklink.find('a')
             link = a['href']
             truncatelink = link.replace('../../..', 'catalogue')
             links.append('http://books.toscrape.com/' + truncatelink)
-        print(singlebooklink)
-
-
-        for link in links:
-            url = link.strip()
-            response = requests.get(url)
-        if response.ok:
-            soup = BeautifulSoup(response.text, 'lxml')
-
-
-            tds = soup.find_all('td')
-            singlebookdata = []
-
-            for td in tds:
-                singlebookdata.append(td.text)
-
-            data = singlebookdata
-            data = dict(zip(headersArray, singlebookdata))
-            booksdata.append(data)
-            print(data)
-        #print(booksdata)
-
-
-
-'''
-# on strip le data pour chaque livre
-for link in links:
-    url = link.strip()
-    response = requests.get(url)
-if response.ok:
-    soup = BeautifulSoup(response.text, 'lxml')
-
-    tds = soup.find_all('td')
-    singlebookdata = []
-
-    for td in tds:
-        singlebookdata.append(td.text)
-
-    data = singlebookdata
-    data = dict(zip(headersArray, singlebookdata))
-    booksdata.append(data)
-    #print(data)
-    #print(booksdata)
-'''
-
-
-
-### on strip le data de chaque livre
-
-        # for link in links:
-        #     url = link.strip()
-        #     response = requests.get(url)age = 23
-
-        # if response.ok:
-        #     soup = BeautifulSoup(response.text, 'lxml')
-        #     tds = soup.find_all('td')
-        #     singlebookdata = []
-
-        #     for td in tds:
-        #         singlebookdata.append(td.text)
-        #     data = singlebookdata
-        #     data = dict(zip(headersArray, singlebookdata))
-        #     booksdata.append(data)
-        # print(booksdata)
-
-        # with open('etape4.csv', 'w', newline='') as csvfile:
-        #     fieldnames = headersArray
-        #     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-        #     writer.writeheader()
-        #     for book in booksdata:
-        #         writer.writerow(book)
-
-            
-
-
-
-
-
-
         
-
-    
-
-
+            # extract data for a single book 
+            for link in links:
+                array = []
+                url = link.strip()
+            response = requests.get(url)
+            if response.ok:
+                soup = BeautifulSoup(response.text, 'lxml')
+                singleBookTitle = soup.find('h1')
+                print(singleBookTitle) 
+                tds = soup.find_all('td')
+                singlebookdata = []
+                for td in tds:
+                    singlebookdata.append(td.text)
+                data = singlebookdata
+                data = dict(zip(headersArray, singlebookdata))
+                booksdata.append(data)
+                print(data)
+            
+        with open('test.csv', 'w', newline='') as csvfile:
+            fieldnames = headersArray
+            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+            writer.writeheader()
+            for book in booksdata:
+                writer.writerow(book)
