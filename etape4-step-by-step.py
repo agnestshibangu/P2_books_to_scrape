@@ -80,6 +80,7 @@ for linkcategory in linkscategory:
                 soup = BeautifulSoup(response.text, 'lxml')
                 singleBookTitle = soup.find('h1')
                 print(singleBookTitle) 
+                
                 tds = soup.find_all('td')
                 singlebookdata = []
                 for td in tds:
@@ -88,8 +89,8 @@ for linkcategory in linkscategory:
                 data = dict(zip(headersArray, singlebookdata))
                 booksdata.append(data)
                 print(data)
-            
-        with open('test.csv', 'w', newline='') as csvfile:
+        print('************')
+        with open('TEST.csv', 'w', newline='') as csvfile:
             fieldnames = headersArray
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
             writer.writeheader()
