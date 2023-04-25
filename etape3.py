@@ -42,7 +42,6 @@ if response.ok:
             response = requests.get(url)
         if response.ok:
             soup = BeautifulSoup(response.text, 'lxml')
-
             tds = soup.find_all('td')
             singlebookdata = []
        
@@ -53,7 +52,7 @@ if response.ok:
             data = dict(zip(headersArray, singlebookdata))
             booksdata.append(data)
             #print(data)
-print(booksdata)
+    print(booksdata)
 
 with open('etape3.csv', 'w', newline='') as csvfile:
     fieldnames = headersArray
