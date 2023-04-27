@@ -29,8 +29,6 @@ url = 'http://books.toscrape.com/'
 
 response = requests.get(url)
 
-booksdata = []
-
 if response.ok:
     linkscategory = []
     linkCategoryName = []
@@ -51,6 +49,10 @@ if response.ok:
     print('************ CATEGORY NAMES ARRAY *************')
     print(categoriesNameArray)
 
+# for var in categoriesNameArray:
+#         print(var) 
+#         with open(var + '.csv', 'w', newline='') as csvfile:
+#             fieldnames = headersArray
 
 ### on strip chaque catégorie et on liste chaque livre, on transforme le titre de chaque livre en url
 
@@ -68,8 +70,11 @@ for linkcategory in linkscategory:
 
         globals()['currentCategory'] = titleCat
         print('The current category is:', currentCategory)
-        currentCategory = []
-        print(currentCategory)        
+        currentCategoryArray = []
+        booksdata = []
+        #workingOnCategory = dict(zip(categoryHeaders, categorycontent))
+        #print('im here')
+        #print(currentCategory)        
 
         # retrieve all book titles from a category
         singlebooklinks = datapage.find_all('h3') 
@@ -78,7 +83,7 @@ for linkcategory in linkscategory:
             link = a['href']
             truncatelink = link.replace('../../..', 'catalogue')
             links.append('http://books.toscrape.com/' + truncatelink)
-            #currentCategory.append(link)
+            
             for link in links:
                 array = []
                 url = link.strip()
@@ -87,43 +92,22 @@ for linkcategory in linkscategory:
                 soup = BeautifulSoup(response.text, 'lxml')
                 singleBookTitle = soup.find('h1').text
                 tds = soup.find_all('td')
-                print(singleBookTitle) 
-                currentCategory.append(singleBookTitle)
+                currentCategoryArray.append(singleBookTitle)
                 singlebookdata = []
     
                 for td in tds:
                     singlebookdata.append(td.text)
-                    data = singlebookdata
-                    data = dict(zip(headersArray, singlebookdata))
-                    booksdata.append(data) 
-                currentCategory.append(data) 
-            
-            
-                    
+                data = dict(zip(headersArray, singlebookdata))
+                booksdata.append(data)
+    print(booksdata)
 
-        # print('currentCategory //////////////////////////')    
-        print(currentCategory)
-        
-            # extract data for a single book 
-        
-        
-        '''
-            tds = soup.find_all('td')
-            singlebookdata = []
-            for td in tds:
-                singlebookdata.append(td.text)
-            data = singlebookdata
-            data = dict(zip(headersArray, singlebookdata))
-            booksdata.append(data)
-
-        '''
-        '''
-            for var in categoriesNameArray:
-                variableName = var
-            with open(variableName + '.csv', 'w', newline='') as csvfile:
-                fieldnames = headersArray
-                writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-                writer.writeheader()
+    for var in categoriesNameArray:
+        print(var) 
+        with open(var + '.csv', 'w', newline='') as csvfile:
+            fieldnames = headersArray
+            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+            writer.writeheader()
             for book in booksdata:
-                writer.writerow(book)
-        '''
+                    writer.writerow(book)
+
+        

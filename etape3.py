@@ -50,6 +50,7 @@ if response.ok:
 
             data = singlebookdata
             data = dict(zip(headersArray, singlebookdata))
+            print(data)
             booksdata.append(data)
             #print(data)
     print(booksdata)
