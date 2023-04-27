@@ -1,29 +1,10 @@
 import requests
 from bs4 import BeautifulSoup 
-#import numpy
-#import pandas
+import numpy
+import pandas
 import csv
-import datetime
-import os
 
-
-x = datetime.datetime.now()
-print(x.year)
-print(x.month)
-print(x.day)
-year = str(x.year)
-month = str(x.month)
-day = str(x.day)
-currentDate = year + '-' + month + '-' + day
-
-# create a folder
-
-
-path = './' + currentDate + '/'
-os.mkdir(path)
-
-
-#### Étape 4 : Extraire tout les produits de toutes les catégorie ###
+#### Étape 3 : Extraire tout les produits de toutes les catégorie ###
 #### convention de nommage, plusieurs fichiers avec intitulé catégorie ####
 
 
@@ -62,13 +43,21 @@ if response.ok:
         singleCategoryName = a.text
         linkcategory = a['href']
         linkscategory.append('http://books.toscrape.com/' + linkcategory) # generating links for each CATEGORY
-        categoriesNameArray.append(singleCategoryName.strip()) # extract category name 
+        categoriesNameArray.append(singleCategoryName.strip())                            # extract category name 
+    # print('list category')
+    # print(linkscategory)
     print('************ CATEGORY NAMES ARRAY *************')
     print(categoriesNameArray)
+
+# for var in categoriesNameArray:
+#         print(var) 
+#         with open(var + '.csv', 'w', newline='') as csvfile:
+#             fieldnames = headersArray
 
 ### on strip chaque catégorie et on liste chaque livre, on transforme le titre de chaque livre en url
 
 for linkcategory in linkscategory:
+
     url = linkcategory.strip()
     response = requests.get(url)
     if response.ok:
@@ -84,7 +73,10 @@ for linkcategory in linkscategory:
         print('The current category is:', currentCategory)
         currentCategoryArray = []
         booksdata = []
-               
+        #workingOnCategory = dict(zip(categoryHeaders, categorycontent))
+        #print('im here')
+        #print(currentCategory)        
+
         # retrieve all book titles from a category
         singlebooklinks = datapage.find_all('h3') 
         for singlebooklink in singlebooklinks:
@@ -94,7 +86,6 @@ for linkcategory in linkscategory:
             links.append('http://books.toscrape.com/' + truncatelink)
             
             for link in links:
-                array = []
                 url = link.strip()
             response = requests.get(url)
             if response.ok:
@@ -108,13 +99,13 @@ for linkcategory in linkscategory:
                     singlebookdata.append(td.text)
                 data = dict(zip(headersArray, singlebookdata))
                 booksdata.append(data)
-    
-    with open(path + titleCat +'.csv', 'w', newline='') as csvfile:
+
+    # for var in categoriesNameArray:
+    #     print(var) 
+    with open(titleCat +'.csv', 'w', newline='') as csvfile:
         print(booksdata)
         fieldnames = headersArray
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
         for book in booksdata:
                 writer.writerow(book)
-
-        

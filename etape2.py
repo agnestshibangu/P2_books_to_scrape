@@ -17,7 +17,6 @@ print(instock.text)
 
 headersArray = numpy.array([])
 dataArray = numpy.array([])
-# print(headersArray)
 
 headers = data.find_all('th')
 for header in headers:
@@ -31,18 +30,6 @@ for data in datas:
 print(len(headersArray))
 print(len(dataArray))
 
-### méthode qui retourne le mauvais format ###
-
-# table = {'headers' : headersArray, 'rows' : dataArray }
-# df = pandas.DataFrame(dataArray, headersArray)
-# print(df)
-# df.to_csv("df.csv", encoding='utf-8', sep=',', columns=headersArray)
-
-###
-
-
-# df = pandas.DataFrame([['Sacramento', 'California'], ['Miami', 'Florida']], columns=header)
-# avec mon code #
 df = pandas.DataFrame([dataArray], columns=[headersArray])
 #
 print(df)
