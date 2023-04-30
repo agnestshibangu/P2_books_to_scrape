@@ -7,7 +7,6 @@ import datetime
 import os
 
 
-
 x = datetime.datetime.now()
 print(x.year)
 print(x.month)
@@ -23,9 +22,11 @@ currentDate = year + '-' + month + '-' + day
 path = './' + currentDate + '/'
 os.mkdir(path)
 
-#### si le dossier n'existe pas, on le créé ####
-# if not os.path.exist(folder):
-#     os.makedirs(folder)
+#### si le dossier image n'existe pas, on le créé ####
+
+path = './images/'
+if not os.path.exists(path):
+    os.makedirs(path)
 
 
 #### Étape 4 : Extraire tout les produits de toutes les catégorie ###
@@ -98,6 +99,10 @@ for linkcategory in linkscategory:
             truncatelink = link.replace('../../..', 'catalogue')
             links.append('http://books.toscrape.com/' + truncatelink)
             
+            
+            
+            
+            
             for link in links:
                 array = []
                 url = link.strip()
@@ -109,10 +114,16 @@ for linkcategory in linkscategory:
                 currentCategoryArray.append(singleBookTitle)
                 singlebookdata = []
     
+            
+
+
+
                 for td in tds:
                     singlebookdata.append(td.text)
                 data = dict(zip(headersArray, singlebookdata))
                 booksdata.append(data)
+
+            
     
     with open(path + titleCat +'.csv', 'w', newline='') as csvfile:
         print(booksdata)
@@ -122,4 +133,4 @@ for linkcategory in linkscategory:
         for book in booksdata:
                 writer.writerow(book)
 
-        
+ 

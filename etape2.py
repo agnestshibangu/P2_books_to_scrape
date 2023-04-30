@@ -27,8 +27,6 @@ print(datas)
 for data in datas:
     dataArray = numpy.append(dataArray, data.text)
 
-print(len(headersArray))
-print(len(dataArray))
 
 df = pandas.DataFrame([dataArray], columns=[headersArray])
 #

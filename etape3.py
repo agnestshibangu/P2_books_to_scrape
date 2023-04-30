@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup 
-import numpy
 import csv
+import os
 
 #### Étape 3 : Extraire toutes les données des produits d’une catégorie ####
 
@@ -44,7 +44,8 @@ if response.ok:
             soup = BeautifulSoup(response.text, 'lxml')
             tds = soup.find_all('td')
             singlebookdata = []
-       
+        
+
             for td in tds:
                 singlebookdata.append(td.text)
 
@@ -61,3 +62,4 @@ with open('etape3.csv', 'w', newline='') as csvfile:
     writer.writeheader()
     for book in booksdata:
         writer.writerow(book)
+
