@@ -1,24 +1,14 @@
 import requests
 from bs4 import BeautifulSoup 
-#import numpy
-#import pandas
 import csv
 import datetime
 import os
+from functions import headersArray
+from functions import currentDate
 
 
-
-x = datetime.datetime.now()
-print(x.year)
-print(x.month)
-print(x.day)
-year = str(x.year)
-month = str(x.month)
-day = str(x.day)
-currentDate = year + '-' + month + '-' + day
 
 # create a folder
-
 
 path = './' + currentDate + '/'
 os.mkdir(path)
@@ -30,22 +20,6 @@ os.mkdir(path)
 
 #### Étape 4 : Extraire tout les produits de toutes les catégorie ###
 #### convention de nommage, plusieurs fichiers avec intitulé catégorie ####
-
-
-### data d'un seul item pour récuperer les headers pour pouvoir construire le csv ###
-
-url = 'https://books.toscrape.com/catalogue/a-light-in-the-attic_1000/index.html'
-response = requests.get(url)
-data = BeautifulSoup(response.text, 'lxml') 
-
-headersArray = []
-
-headers = data.find_all('th')
-for header in headers:
-    headersArray.append(header.text)
-print(headersArray)
-
-### 
 
 url = 'http://books.toscrape.com/'
 
@@ -92,6 +66,7 @@ for linkcategory in linkscategory:
                
         # retrieve all book titles from a category
         singlebooklinks = datapage.find_all('h3') 
+
         for singlebooklink in singlebooklinks:
             a = singlebooklink.find('a')
             link = a['href']
@@ -99,7 +74,6 @@ for linkcategory in linkscategory:
             links.append('http://books.toscrape.com/' + truncatelink)
             
             for link in links:
-                array = []
                 url = link.strip()
             response = requests.get(url)
             if response.ok:
