@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup 
+import concurrent.futures
 import datetime
 import csv
 
@@ -38,19 +39,25 @@ def catalogueLink(a):
     links.append('http://books.toscrape.com/' + truncatelink)
     return links
 
+with concurrent.futures.ThreadPoolExecutor() as executor:
+    executor.map(catalogueLink, links)
+
+
+singlebookdata = []
+
 def retreiveAllTds(link): 
     url = link.strip()
     response = requests.get(url)
     if response.ok:
         soup = BeautifulSoup(response.text, 'lxml')
         tds = soup.find_all('td')
-        singlebookdata = []
-
         for td in tds:
             singlebookdata.append(td.text)
         return singlebookdata
-    
-    
+
+with concurrent.futures.ThreadPoolExecutor() as executor:
+    executor.map(retreiveAllTds, singlebookdata) 
+
     
 def generateCsv(fileNameForCsv, booksdata):
     with open(fileNameForCsv +'.csv', 'w', newline='') as csvfile:

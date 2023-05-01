@@ -79,10 +79,13 @@ for linkcategory in linkscategory:
                 booksdata.append(data)
             
         fileNameForCsv = path + titleCat
+        functions.generateCsv(fileNameForCsv, booksdata)
         
-        with open(fileNameForCsv +'.csv', 'w', newline='') as csvfile:
-            fieldnames = headersArray
-            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-            writer.writeheader()
-            for book in booksdata:
-                    writer.writerow(book)
+        # with open(fileNameForCsv +'.csv', 'w', newline='') as csvfile:
+        #     fieldnames = headersArray
+        #     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        #     writer.writeheader()
+        #     for book in booksdata:
+        #             writer.writerow(book)
+        
+
