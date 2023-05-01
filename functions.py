@@ -1,8 +1,7 @@
 import requests
 from bs4 import BeautifulSoup 
 import datetime
-
-### fonction pour générer un tableau de headers ###
+import csv
 
 headersArray = []
 
@@ -18,9 +17,6 @@ def generateHeaders():
     
 generateHeaders()
 
-
-### fonction pour avoir la date du jour ###
-
 currentDate = 'no horodatage'
 
 def Horodatage():
@@ -33,57 +29,34 @@ def Horodatage():
 
 Horodatage()
 
+links = []
 
+def catalogueLink(a):
+    link = a['href']
+    global truncatelink
+    truncatelink = link.replace('../../..', 'catalogue')
+    links.append('http://books.toscrape.com/' + truncatelink)
+    return links
 
+def retreiveAllTds(link): 
+    url = link.strip()
+    response = requests.get(url)
+    if response.ok:
+        soup = BeautifulSoup(response.text, 'lxml')
+        tds = soup.find_all('td')
+        singlebookdata = []
 
-     
-
-
-
-'''
-for singlebooklink in singlebooklinks:
-        a = singlebooklink.find('a')
-        link = a['href']
-        truncatelink = link.replace('../../..', 'catalogue')
-        links.append('http://books.toscrape.com/' + truncatelink)
-        for link in links:
-            url = link.strip()
-            response = requests.get(url)
-        if response.ok:
-            soup = BeautifulSoup(response.text, 'lxml')
-            tds = soup.find_all('td')
-            singlebookdata = []
-        
-
-            for td in tds:
-                singlebookdata.append(td.text)
-            data = dict(zip(headersArray, singlebookdata))
-            booksdata.append(data)
+        for td in tds:
+            singlebookdata.append(td.text)
+        return singlebookdata
     
-
-for singlebooklink in singlebooklinks:
-        a = singlebooklink.find('a')
-        link = a['href']
-        truncatelink = link.replace('../../..', 'catalogue')
-        links.append('http://books.toscrape.com/' + truncatelink)
-        
-        for link in links:
-            url = link.strip()
-        response = requests.get(url)
-        if response.ok:
-            soup = BeautifulSoup(response.text, 'lxml')
-            singleBookTitle = soup.find('h1').text
-            tds = soup.find_all('td')
-            currentCategoryArray.append(singleBookTitle)
-            singlebookdata = []
-
-            for td in tds:
-                singlebookdata.append(td.text)
-            data = dict(zip(headersArray, singlebookdata))
-            booksdata.append(data)
-
-
-'''
+def generateCsv(fileNameForCsv, booksdata):
+    with open(fileNameForCsv +'.csv', 'w', newline='') as csvfile:
+            fieldnames = headersArray
+            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+            writer.writeheader()
+            for book in booksdata:
+                writer.writerow(book)
 
 
 
@@ -93,37 +66,4 @@ for singlebooklink in singlebooklinks:
 
 
 
-
-'''
-##### fonction pour écrire les csv ####
-
-with open('etape3.csv', 'w', newline='') as csvfile:
-    fieldnames = headersArray
-    writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-    writer.writeheader()
-    for book in booksdata:
-        writer.writerow(book)
-
-
-with open(path + titleCat +'.csv', 'w', newline='') as csvfile:
-    print(booksdata)
-    fieldnames = headersArray
-    writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-    writer.writeheader()
-    for book in booksdata:
-            writer.writerow(book)
-
-##### fonction pour l'horodatage ####
-
-
-x = datetime.datetime.now()
-print(x.year)
-print(x.month)
-print(x.day)
-year = str(x.year)
-month = str(x.month)
-day = str(x.day)
-currentDate = year + '-' + month + '-' + day
-
-'''
 

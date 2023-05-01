@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 import csv
 import datetime
 import os
+import functions
 from functions import headersArray
 from functions import currentDate
 
@@ -10,7 +11,8 @@ from functions import currentDate
 
 # create a folder
 
-path = './' + currentDate + '/'
+#path = './' + currentDate + '/'
+path = './blabka/'
 os.mkdir(path)
 
 #### si le dossier n'existe pas, on le créé ####
@@ -55,10 +57,7 @@ for linkcategory in linkscategory:
         books = []
         datapage = BeautifulSoup(response.text, 'lxml') # single CATEGORY page
         titleCat = datapage.find('h1').text
-        print('/////////////////////////////////////////////////')
-
         currentCategory = 'null' 
-
         globals()['currentCategory'] = titleCat
         print('The current category is:', currentCategory)
         currentCategoryArray = []
@@ -68,32 +67,22 @@ for linkcategory in linkscategory:
         singlebooklinks = datapage.find_all('h3') 
 
         for singlebooklink in singlebooklinks:
-            a = singlebooklink.find('a')
-            link = a['href']
-            truncatelink = link.replace('../../..', 'catalogue')
-            links.append('http://books.toscrape.com/' + truncatelink)
-            
-            for link in links:
-                url = link.strip()
-            response = requests.get(url)
-            if response.ok:
-                soup = BeautifulSoup(response.text, 'lxml')
-                singleBookTitle = soup.find('h1').text
-                tds = soup.find_all('td')
-                currentCategoryArray.append(singleBookTitle)
-                singlebookdata = []
-    
-                for td in tds:
-                    singlebookdata.append(td.text)
+                a = singlebooklink.find('a')
+                links = functions.catalogueLink(a)
+                
+                for link in links:
+                    singlebookdata = functions.retreiveAllTds(link)
+                if singlebookdata is None: 
+                    continue
                 data = dict(zip(headersArray, singlebookdata))
+                # print(data)                    
                 booksdata.append(data)
-    
-    with open(path + titleCat +'.csv', 'w', newline='') as csvfile:
-        print(booksdata)
-        fieldnames = headersArray
-        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-        writer.writeheader()
-        for book in booksdata:
-                writer.writerow(book)
-
+            
+        fileNameForCsv = path + titleCat
         
+        with open(fileNameForCsv +'.csv', 'w', newline='') as csvfile:
+            fieldnames = headersArray
+            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+            writer.writeheader()
+            for book in booksdata:
+                    writer.writerow(book)
