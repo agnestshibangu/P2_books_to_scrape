@@ -1,12 +1,13 @@
 import requests
 from bs4 import BeautifulSoup 
-import csv
-import datetime
-import time
+# import csv
+# import datetime
 import os
-import functions
+import functionsOpti
+import time
 from functions import headersArray
 from functions import currentDate
+
 
 timeStart = time.time()
 
@@ -69,20 +70,20 @@ for linkcategory in linkscategory:
 
         for singlebooklink in singlebooklinks:
                 a = singlebooklink.find('a')
-                links = functions.catalogueLink(a)
+                links = functionsOpti.catalogueLink(a)
                 
                 for link in links:
-                    singlebookdata = functions.retreiveAllTds(link)
+                    singlebookdata = functionsOpti.retreiveAllTds(link)
                 if singlebookdata is None: 
                     continue
                 data = dict(zip(headersArray, singlebookdata))
                 # print(data)                    
                 booksdata.append(data)
-            
+
+        
         timeFinish = time.time() - timeStart
         print("temps d'execution :", timeFinish)
         fileNameForCsv = path + titleCat
-        functions.generateCsv(fileNameForCsv, booksdata)
+        functionsOpti.generateCsv(fileNameForCsv, booksdata)
         
      
-

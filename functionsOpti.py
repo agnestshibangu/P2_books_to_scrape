@@ -10,10 +10,11 @@ def generateHeaders():
     url = 'https://books.toscrape.com/catalogue/a-light-in-the-attic_1000/index.html'
     response = requests.get(url)
     data = BeautifulSoup(response.text, 'lxml') 
-
+    
     headers = data.find_all('th')
     for header in headers:
         headersArray.append(header.text)
+    headersArray.append('title')
     print(headersArray)
     
 generateHeaders()
@@ -49,11 +50,14 @@ def retreiveAllTds(link):
     url = link.strip()
     response = requests.get(url)
     if response.ok:
-        soup = BeautifulSoup(response.text, 'lxml')
-        tds = soup.find_all('td')
-        for td in tds:
-            singlebookdata.append(td.text)
-        return singlebookdata
+        soup = BeautifulSoup(response.text, 'lxml') 
+    tds = soup.find_all('td')
+    for td in tds:
+        singlebookdata.append(td.text)
+    # title = soup.find('h1').text 
+    # singlebookdata.append(title)
+
+    return singlebookdata
 
 with concurrent.futures.ThreadPoolExecutor() as executor:
     executor.map(retreiveAllTds, singlebookdata) 

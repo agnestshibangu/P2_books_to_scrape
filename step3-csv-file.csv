@@ -1,9 +1,9 @@
-UPC,Product Type,Price (excl. tax),Price (incl. tax),Tax,Availability,Number of reviews
-ccd9ffa25efabdea,Books,£44.18,£44.18,£0.00,In stock (18 available),0
-9194ae88379dbf1a,Books,£49.05,£49.05,£0.00,In stock (14 available),0
-d6d9ffea95f2f8bf,Books,£48.63,£48.63,£0.00,In stock (9 available),0
-3eec766dda26fa64,Books,£43.02,£43.02,£0.00,In stock (8 available),0
-8a150fd8ff5d7686,Books,£10.29,£10.29,£0.00,In stock (8 available),0
-9147c5251cc99eb1,Books,£41.14,£41.14,£0.00,In stock (7 available),0
-4b8fa561a1e52d1c,Books,£32.34,£32.34,£0.00,In stock (7 available),0
-66a4e422b212726a,Books,£39.51,£39.51,£0.00,In stock (1 available),0
+UPC,Product Type,Price (excl. tax),Price (incl. tax),Tax,Availability,Number of reviews,title
+ccd9ffa25efabdea,Books,£44.18,£44.18,£0.00,In stock (18 available),0,Wall and Piece
+9194ae88379dbf1a,Books,£49.05,£49.05,£0.00,In stock (14 available),0,Feathers: Displays of Brilliant Plumage
+d6d9ffea95f2f8bf,Books,£48.63,£48.63,£0.00,In stock (9 available),0,Art and Fear: Observations on the Perils (and Rewards) of Artmaking
+3eec766dda26fa64,Books,£43.02,£43.02,£0.00,In stock (8 available),0,The New Drawing on the Right Side of the Brain
+8a150fd8ff5d7686,Books,£10.29,£10.29,£0.00,In stock (8 available),0,History of Beauty
+9147c5251cc99eb1,Books,£41.14,£41.14,£0.00,In stock (7 available),0,The Story of Art
+4b8fa561a1e52d1c,Books,£32.34,£32.34,£0.00,In stock (7 available),0,The Art Book
+66a4e422b212726a,Books,£39.51,£39.51,£0.00,In stock (1 available),0,Ways of Seeing

@@ -9,10 +9,10 @@ def generateHeaders():
     url = 'https://books.toscrape.com/catalogue/a-light-in-the-attic_1000/index.html'
     response = requests.get(url)
     data = BeautifulSoup(response.text, 'lxml') 
-
     headers = data.find_all('th')
     for header in headers:
         headersArray.append(header.text)
+    headersArray.append('title')
     print(headersArray)
     
 generateHeaders()
@@ -38,6 +38,7 @@ def catalogueLink(a):
     links.append('http://books.toscrape.com/' + truncatelink)
     return links
 
+
 def retreiveAllTds(link): 
     url = link.strip()
     response = requests.get(url)
@@ -45,9 +46,10 @@ def retreiveAllTds(link):
         soup = BeautifulSoup(response.text, 'lxml')
         tds = soup.find_all('td')
         singlebookdata = []
-
+        title = soup.find('h1').text
         for td in tds:
             singlebookdata.append(td.text)
+        singlebookdata.append(title)
         return singlebookdata
     
     
