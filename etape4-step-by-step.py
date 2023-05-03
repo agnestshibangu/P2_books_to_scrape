@@ -12,7 +12,8 @@ timeStart = time.time()
 
 # create a folder
 
-path = './blabka/'
+path = str(functions.Horodatage()) + '/'
+print(path)
 os.mkdir(path)
 
 url = 'http://books.toscrape.com/'
@@ -56,6 +57,7 @@ for linkcategory in linkscategory:
         print('The current category is:', currentCategory)
         currentCategoryArray = []
         booksdata = []
+        imagesData = []
                
         # retrieve all book titles from a category
         singlebooklinks = datapage.find_all('h3') 
@@ -67,17 +69,17 @@ for linkcategory in linkscategory:
                 
         for link in links:
             singlebookdata = functions.retreiveAllTds(link)
+            imagesData = functions.getSingleImage(link, imagesData)
             #print(singlebookdata)
             if singlebookdata is None: 
                 continue
             data = dict(zip(headersArray, singlebookdata))
             # print(data)                    
             booksdata.append(data)
-        
+    
+        print(imagesData)
         print(booksdata)
-        # timeFinish = time.time() - timeStart
-        # print("temps d'execution :", timeFinish)
-       
+    
         fileNameForCsv = path + titleCat
         functions.generateCsv(fileNameForCsv, booksdata)
     

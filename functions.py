@@ -51,10 +51,18 @@ def retreiveAllTds(link):
         for td in tds:
             singlebookdata.append(td.text)
         singlebookdata.append(title)
-        print(singlebookdata)
         return singlebookdata
     
-    
+def getSingleImage(link, imagesData):
+    url = link.strip()
+    response = requests.get(url)
+    if response.ok:
+        soup = BeautifulSoup(response.text, 'lxml')
+        img = soup.find('img')
+        toAddImgSrc = img['src']
+        imgSrc = toAddImgSrc.replace('../../', 'http://books.toscrape.com/')
+        imagesData.append(imgSrc)
+        return imagesData
     
 def generateCsv(fileNameForCsv, booksdata):
     with open(fileNameForCsv +'.csv', 'w', encoding="utf-8", newline='') as csvfile:
@@ -64,7 +72,8 @@ def generateCsv(fileNameForCsv, booksdata):
             for book in booksdata:
                 writer.writerow(book)
 
-
+# def saveImagesbyCat(bookdata):
+#     for 
 
 
 
