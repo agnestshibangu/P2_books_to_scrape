@@ -12,17 +12,8 @@ timeStart = time.time()
 
 # create a folder
 
-#path = './' + currentDate + '/'
 path = './blabka/'
 os.mkdir(path)
-
-#### si le dossier n'existe pas, on le créé ####
-# if not os.path.exist(folder):
-#     os.makedirs(folder)
-
-
-#### Étape 4 : Extraire tout les produits de toutes les catégorie ###
-#### convention de nommage, plusieurs fichiers avec intitulé catégorie ####
 
 url = 'http://books.toscrape.com/'
 
@@ -46,7 +37,9 @@ if response.ok:
         linkscategory.append('http://books.toscrape.com/' + linkcategory) # generating links for each CATEGORY
         categoriesNameArray.append(singleCategoryName.strip()) # extract category name 
     print('************ CATEGORY NAMES ARRAY *************')
-    print(categoriesNameArray)
+    #print(categoriesNameArray)
+    print(linkscategory)
+
 
 ### on strip chaque catégorie et on liste chaque livre, on transforme le titre de chaque livre en url
 
@@ -68,21 +61,25 @@ for linkcategory in linkscategory:
         singlebooklinks = datapage.find_all('h3') 
 
         for singlebooklink in singlebooklinks:
-                a = singlebooklink.find('a')
-                links = functions.catalogueLink(a)
+            a = singlebooklink.find('a')
+            functions.catalogueLink(a,links)
+        print(links)
                 
-                for link in links:
-                    singlebookdata = functions.retreiveAllTds(link)
-                if singlebookdata is None: 
-                    continue
-                data = dict(zip(headersArray, singlebookdata))
-                # print(data)                    
-                booksdata.append(data)
-            
-        timeFinish = time.time() - timeStart
-        print("temps d'execution :", timeFinish)
+        for link in links:
+            singlebookdata = functions.retreiveAllTds(link)
+            #print(singlebookdata)
+            if singlebookdata is None: 
+                continue
+            data = dict(zip(headersArray, singlebookdata))
+            # print(data)                    
+            booksdata.append(data)
+        
+        print(booksdata)
+        # timeFinish = time.time() - timeStart
+        # print("temps d'execution :", timeFinish)
+       
         fileNameForCsv = path + titleCat
         functions.generateCsv(fileNameForCsv, booksdata)
-        
+    
      
 

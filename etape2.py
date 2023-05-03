@@ -2,6 +2,8 @@ import requests
 from bs4 import BeautifulSoup 
 import numpy
 import pandas
+import functions
+
 
 url = 'https://books.toscrape.com/catalogue/a-light-in-the-attic_1000/index.html'
 response = requests.get(url)
@@ -29,8 +31,10 @@ for data in datas:
     dataArray.append(data.text)
 dataArray.append(title)
 
+titleFile = functions.Horodatage() 
+print(str(titleFile))
 
 df = pandas.DataFrame([dataArray], columns=[headersArray])
 #
 print(df)
-df.to_csv("etape2.csv", encoding='utf-8', sep=',', index=False)
+df.to_csv(titleFile + '-etape2-file.csv', encoding='utf-8', sep=',', index=False)

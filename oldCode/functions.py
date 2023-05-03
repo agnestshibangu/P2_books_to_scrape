@@ -57,7 +57,7 @@ def retreiveAllTds(link):
     
     
 def generateCsv(fileNameForCsv, booksdata):
-    with open(fileNameForCsv +'.csv', 'w', encoding="utf-8", newline='') as csvfile:
+    with open(fileNameForCsv +'.csv', 'w', newline='') as csvfile:
             fieldnames = headersArray
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
             writer.writeheader()

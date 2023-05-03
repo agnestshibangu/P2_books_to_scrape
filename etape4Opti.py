@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 # import csv
 # import datetime
 import os
-import functionsOpti
+import functions
 import time
 from functions import headersArray
 from functions import currentDate
@@ -70,10 +70,10 @@ for linkcategory in linkscategory:
 
         for singlebooklink in singlebooklinks:
                 a = singlebooklink.find('a')
-                links = functionsOpti.catalogueLink(a)
+                links = functions.catalogueLink(a)
                 
                 for link in links:
-                    singlebookdata = functionsOpti.retreiveAllTds(link)
+                    singlebookdata = functions.retreiveAllTds(link)
                 if singlebookdata is None: 
                     continue
                 data = dict(zip(headersArray, singlebookdata))
@@ -84,6 +84,6 @@ for linkcategory in linkscategory:
         timeFinish = time.time() - timeStart
         print("temps d'execution :", timeFinish)
         fileNameForCsv = path + titleCat
-        functionsOpti.generateCsv(fileNameForCsv, booksdata)
+        functions.generateCsv(fileNameForCsv, booksdata)
         
      
