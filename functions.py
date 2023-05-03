@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup 
 import datetime
 import csv
+import os
 
 headersArray = []
 
@@ -62,7 +63,31 @@ def getSingleImage(link, imagesData):
         toAddImgSrc = img['src']
         imgSrc = toAddImgSrc.replace('../../', 'http://books.toscrape.com/')
         imagesData.append(imgSrc)
-        return imagesData
+    # print('/////////////////////// from functions')
+    # print(imagesData)
+    # print('/////////////////////// from functions')
+    return imagesData
+    
+
+
+    
+def saveImagesbyCat(imagesData, currentCategory):
+
+    folder = str('images/' + currentCategory + '/')
+    # Check first if folder exists, else create a new one
+    if not os.path.exists(folder):
+        os.makedirs(folder)
+
+    for image in imagesData:
+        url = image
+        image_source = requests.get(url)
+        output = 'img.png'
+        
+        with open(f'{folder}{output}', 'wb') as file:
+            file.write(image_source.content)
+
+
+
     
 def generateCsv(fileNameForCsv, booksdata):
     with open(fileNameForCsv +'.csv', 'w', encoding="utf-8", newline='') as csvfile:
@@ -72,8 +97,6 @@ def generateCsv(fileNameForCsv, booksdata):
             for book in booksdata:
                 writer.writerow(book)
 
-# def saveImagesbyCat(bookdata):
-#     for 
 
 
 

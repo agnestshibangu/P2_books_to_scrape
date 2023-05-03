@@ -77,9 +77,13 @@ for linkcategory in linkscategory:
             # print(data)                    
             booksdata.append(data)
     
-        print(imagesData)
-        print(booksdata)
-    
+        # print('///////////////////// from script')
+        # print(imagesData)
+        # print('///////////////// from script')
+        # print(booksdata)
+
+        functions.saveImagesbyCat(imagesData, currentCategory)
+
         fileNameForCsv = path + titleCat
         functions.generateCsv(fileNameForCsv, booksdata)
     
