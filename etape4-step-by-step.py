@@ -69,23 +69,22 @@ for linkcategory in linkscategory:
                 
         for link in links:
             singlebookdata = functions.retreiveAllTds(link)
-            imagesData = functions.getSingleImage(link, imagesData)
+            imagesData = functions.getSingleImageSrc(link, imagesData)
             #print(singlebookdata)
             if singlebookdata is None: 
                 continue
             data = dict(zip(headersArray, singlebookdata))
             # print(data)                    
             booksdata.append(data)
-    
-        # print('///////////////////// from script')
-        # print(imagesData)
-        # print('///////////////// from script')
+           
+        #print('///////////////////// from script')
+        #print(imagesData)
+        
         # print(booksdata)
-
         functions.saveImagesbyCat(imagesData, currentCategory)
 
-        fileNameForCsv = path + titleCat
-        functions.generateCsv(fileNameForCsv, booksdata)
+        # fileNameForCsv = path + titleCat
+        # functions.generateCsv(fileNameForCsv, booksdata)
     
      
 

@@ -54,7 +54,7 @@ def retreiveAllTds(link):
         singlebookdata.append(title)
         return singlebookdata
     
-def getSingleImage(link, imagesData):
+def getSingleImageSrc(link, imagesData):
     url = link.strip()
     response = requests.get(url)
     if response.ok:
@@ -68,23 +68,22 @@ def getSingleImage(link, imagesData):
     # print('/////////////////////// from functions')
     return imagesData
     
-
-
-    
 def saveImagesbyCat(imagesData, currentCategory):
-
     folder = str('images/' + currentCategory + '/')
     # Check first if folder exists, else create a new one
     if not os.path.exists(folder):
         os.makedirs(folder)
-
+    print('I m here')
+    x = 0
     for image in imagesData:
+        num = str(x)
         url = image
         image_source = requests.get(url)
-        output = 'img.png'
-        
+        output = str('img-' + num + '.png')
         with open(f'{folder}{output}', 'wb') as file:
             file.write(image_source.content)
+        x = x + 1
+        print('counter' + str(x))
 
 
 
