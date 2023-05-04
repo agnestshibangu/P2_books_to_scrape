@@ -1,6 +1,6 @@
 import requests
 from bs4 import BeautifulSoup 
-import numpy
+import os
 import pandas
 import functions
 
@@ -17,6 +17,10 @@ print(instock.text)
 
 #### Étape 2 : Extraire les données d’un seul produit ####
 
+path = 'STEP2/'
+os.mkdir(path)
+
+
 headersArray = []
 dataArray = []
 
@@ -32,9 +36,9 @@ for data in datas:
 dataArray.append(title)
 
 titleFile = functions.Horodatage() 
-print(str(titleFile))
+
 
 df = pandas.DataFrame([dataArray], columns=[headersArray])
 #
 print(df)
-df.to_csv(titleFile + '-etape2-file.csv', encoding='utf-8', sep=',', index=False)
+df.to_csv(path + titleFile + '-SingleBookData-file.csv', encoding='utf-8', sep=',', index=False)

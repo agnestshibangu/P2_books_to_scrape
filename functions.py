@@ -26,7 +26,7 @@ def Horodatage():
     month = str(x.month)
     day = str(x.day)
     currentDate = year + '-' + month + '-' + day
-    return currentDate
+    return str(currentDate)
 
 Horodatage()
 
@@ -63,18 +63,14 @@ def getSingleImageSrc(link, imagesData):
         toAddImgSrc = img['src']
         imgSrc = toAddImgSrc.replace('../../', 'http://books.toscrape.com/')
         imagesData.append(imgSrc)
-    # print('/////////////////////// from functions')
-    # print(imagesData)
-    # print('/////////////////////// from functions')
     return imagesData
     
 def saveImagesbyCat(imagesData, currentCategory):
-    folder = str('images/' + currentCategory + '/')
-    # Check first if folder exists, else create a new one
+    folder = str('booksillustrations/' + currentCategory + '/')
     if not os.path.exists(folder):
         os.makedirs(folder)
     print('I m here')
-    x = 0
+    x = 1
     for image in imagesData:
         num = str(x)
         url = image
@@ -83,11 +79,8 @@ def saveImagesbyCat(imagesData, currentCategory):
         with open(f'{folder}{output}', 'wb') as file:
             file.write(image_source.content)
         x = x + 1
-        print('counter' + str(x))
-
-
-
     
+
 def generateCsv(fileNameForCsv, booksdata):
     with open(fileNameForCsv +'.csv', 'w', encoding="utf-8", newline='') as csvfile:
             fieldnames = headersArray
@@ -95,6 +88,9 @@ def generateCsv(fileNameForCsv, booksdata):
             writer.writeheader()
             for book in booksdata:
                 writer.writerow(book)
+
+
+
 
 
 

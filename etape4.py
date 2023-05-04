@@ -1,7 +1,5 @@
 import requests
 from bs4 import BeautifulSoup 
-import csv
-import datetime
 import time
 import os
 import functions
@@ -12,7 +10,8 @@ timeStart = time.time()
 
 # create a folder
 
-path = str(functions.Horodatage())
+path = str(functions.Horodatage()) + '/'
+print(path)
 os.mkdir(path)
 
 url = 'http://books.toscrape.com/'
@@ -56,6 +55,7 @@ for linkcategory in linkscategory:
         print('The current category is:', currentCategory)
         currentCategoryArray = []
         booksdata = []
+        imagesData = []
                
         # retrieve all book titles from a category
         singlebooklinks = datapage.find_all('h3') 
@@ -66,20 +66,19 @@ for linkcategory in linkscategory:
         print(links)
                 
         for link in links:
-            
-        #     singlebookdata = functions.retreiveAllTds(link)
-        #     #print(singlebookdata)
-        #     if singlebookdata is None: 
-        #         continue
-        #     data = dict(zip(headersArray, singlebookdata))
-        #     # print(data)                    
-        #     booksdata.append(data)
-
+            singlebookdata = functions.retreiveAllTds(link)
+            imagesData = functions.getSingleImageSrc(link, imagesData)
+            #print(singlebookdata)
+            if singlebookdata is None: 
+                continue
+            data = dict(zip(headersArray, singlebookdata))
+            # print(data)                    
+            booksdata.append(data)
         
-        # print(booksdata)
-    
-        # fileNameForCsv = path + titleCat
-        # functions.generateCsv(fileNameForCsv, booksdata)
+        print(imagesData)
+        functions.saveImagesbyCat(imagesData, currentCategory)
+        fileNameForCsv = path + titleCat
+        functions.generateCsv(fileNameForCsv, booksdata)
     
      
 
