@@ -30,6 +30,46 @@ def Horodatage():
 
 Horodatage()
 
+#### etape 3 ####
+
+def getNext(currentPage):
+    if currentPage.find('li', {'class': 'next'}):
+        next = currentPage.find('li', {'class': 'next'})
+        NextA = next.find('a')
+        NextAHref = NextA['href']
+        nextLink = 'https://books.toscrape.com/catalogue/category/books/fiction_10/' + NextAHref
+        print(nextLink)
+        return nextLink
+    
+def getData(nextLink):
+    resp = requests.get(nextLink)
+    if resp.ok:
+        currentPage = BeautifulSoup(resp.text, 'lxml')
+        return currentPage
+    
+def getAllBooksTitleLoop(currentPage, singlebooklinks):
+    AllBooksLoop = currentPage.find_all('h3')
+    for book in AllBooksLoop:
+        print(book)
+        singlebooklinks.append(book)
+    return singlebooklinks
+
+def clickNextLink(singlebooklinks):
+    i = 1
+    NextAHref = 'page-' + str(i) + '.html'
+    currentPage = 'https://books.toscrape.com/catalogue/category/books/fiction_10/' + NextAHref
+    print(currentPage)
+    resp = requests.get(currentPage)
+    if resp.ok:
+        currentPage = BeautifulSoup(resp.text, 'lxml')
+        getAllBooksTitleLoop(currentPage, singlebooklinks)
+    while currentPage.find('li', {'class': 'next'}):
+        nextLink = getNext(currentPage)
+        currentPage = getData(nextLink)
+        getAllBooksTitleLoop(currentPage, singlebooklinks)
+
+
+#################
 
 #links = []
 
