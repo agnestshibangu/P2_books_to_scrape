@@ -81,15 +81,9 @@ def clickNextLink():
     resp = requests.get(currentPage)
     if resp.ok:
         currentPage = BeautifulSoup(resp.text, 'lxml')
-    nextLink = getNext(currentPage)
-    currentPage = getData(nextLink)
-    nextLink = getNext(currentPage)
-    currentPage = getData(nextLink)
-    nextLink = getNext(currentPage)
-
-
-    # currentPage = getData(nextLink)
-    # nextLink = getNext(currentPage)
+    while currentPage.find('li', {'class': 'next'}):
+        nextLink = getNext(currentPage)
+        currentPage = getData(nextLink)
 
 clickNextLink()
 
