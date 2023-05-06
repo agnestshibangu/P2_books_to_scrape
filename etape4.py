@@ -24,6 +24,7 @@ if response.ok:
     linkscategory = []
     linkCategoryName = []
     categoriesNameArray = []
+    singlebooklinks = []
     datapage = BeautifulSoup(response.text, 'lxml')
     sidedivcat = datapage.find('div', {'class':'side_categories'})
     # fonction pour extraire npm de la categorie
@@ -59,6 +60,10 @@ for linkcategory in linkscategory:
                
         # retrieve all book titles from a category
         singlebooklinks = datapage.find_all('h3') 
+        
+        
+
+
 
         for singlebooklink in singlebooklinks:
             a = singlebooklink.find('a')

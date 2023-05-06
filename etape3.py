@@ -24,21 +24,21 @@ if response.ok:
 
 #### functions to loop through all the pages of a category ####
 
-functions.clickNextLink(singlebooklinks)
+functions.clickNextLink(singlebooklinks, url)
             
 #################################################################
 
-print(singlebooklinks)
+# print(singlebooklinks)
 
-for singlebooklink in singlebooklinks:
-    a = singlebooklink.find('a')
-    links = functions.catalogueLink(a,links)
-    for link in links:
-        singlebookdata = functions.retreiveAllTds(link)
-    data = dict(zip(headersArray, singlebookdata))
-    booksdata.append(data)
+# for singlebooklink in singlebooklinks:
+#     a = singlebooklink.find('a')
+#     links = functions.catalogueLink(a,links)
+#     for link in links:
+#         singlebookdata = functions.retreiveAllTds(link)
+#     data = dict(zip(headersArray, singlebookdata))
+#     booksdata.append(data)
 
-    fileNameForCsv = path + titleFile + '-SingleCategoryBookData-file'
-    functions.generateCsv(fileNameForCsv, booksdata)
+#     fileNameForCsv = path + titleFile + '-SingleCategoryBookData-file'
+#     functions.generateCsv(fileNameForCsv, booksdata)
 
 
