@@ -9,7 +9,7 @@ titleFile = functions.Horodatage()
 
 #### Étape 3 : Extraire toutes les données des produits d’une catégorie ####
 
-path = 'STEP3/'
+path = 'DATA/STEP3/'
 os.mkdir(path) 
 
 url = 'https://books.toscrape.com/catalogue/category/books/sequential-art_5/page-1.html'
@@ -28,17 +28,17 @@ functions.clickNextLink(singlebooklinks, url)
             
 #################################################################
 
-# print(singlebooklinks)
+print(singlebooklinks)
 
-# for singlebooklink in singlebooklinks:
-#     a = singlebooklink.find('a')
-#     links = functions.catalogueLink(a,links)
-#     for link in links:
-#         singlebookdata = functions.retreiveAllTds(link)
-#     data = dict(zip(headersArray, singlebookdata))
-#     booksdata.append(data)
+for singlebooklink in singlebooklinks:
+    a = singlebooklink.find('a')
+    links = functions.catalogueLink(a,links)
+    for link in links:
+        singlebookdata = functions.retreiveAllTds(link)
+    data = dict(zip(headersArray, singlebookdata))
+    booksdata.append(data)
 
-#     fileNameForCsv = path + titleFile + '-SingleCategoryBookData-file'
-#     functions.generateCsv(fileNameForCsv, booksdata)
+    fileNameForCsv = path + titleFile + '-SingleCategoryBookData-file'
+    functions.generateCsv(fileNameForCsv, booksdata)
 
 

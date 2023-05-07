@@ -109,7 +109,7 @@ def getSingleImageSrc(link, imagesData):
     return imagesData
     
 def saveImagesbyCat(imagesData, currentCategory):
-    folder = str('booksillustrations/' + currentCategory + '/')
+    folder = str('DATA/booksillustrations/' + currentCategory + '/')
     if not os.path.exists(folder):
         os.makedirs(folder)
     print('i m in the saveimagesfunction')

@@ -17,7 +17,7 @@ print(instock.text)
 
 #### Étape 2 : Extraire les données d’un seul produit ####
 
-path = 'STEP2/'
+path = 'DATA/STEP2/'
 os.mkdir(path)
 
 

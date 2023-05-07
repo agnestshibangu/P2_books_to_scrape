@@ -10,7 +10,8 @@ timeStart = time.time()
 
 # create a folder
 
-path = str(functions.Horodatage()) + '/'
+# path = str(functions.Horodatage()) + '/'
+path = 'DATA/' + str(functions.Horodatage()) + '-books-data' + '/'
 print(path)
 os.mkdir(path)
 
@@ -43,7 +44,7 @@ if response.ok:
 
 for linkcategory in linkscategory:
     url = linkcategory.strip()
-    #print(url)
+
     response = requests.get(url)
     if response.ok:
         links = []
