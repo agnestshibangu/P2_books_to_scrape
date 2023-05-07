@@ -57,9 +57,11 @@ def getAllBooksTitleLoop(currentPage, singlebooklinks):
 def clickNextLink(singlebooklinks, url):
     i = 1
     NextAHref = 'page-' + str(i) + '.html'
-    modifiedUrl = url.replace('page-1.html', '')
+    #print('i am here')
+    #print(url)
+    modifiedUrl = url.replace('index.html', '')
     currentPage = modifiedUrl + NextAHref
-    print(currentPage)
+    #print(currentPage)
     resp = requests.get(currentPage)
     if resp.ok:
         currentPage = BeautifulSoup(resp.text, 'lxml')
@@ -110,7 +112,7 @@ def saveImagesbyCat(imagesData, currentCategory):
     folder = str('booksillustrations/' + currentCategory + '/')
     if not os.path.exists(folder):
         os.makedirs(folder)
-    print('I m here')
+    print('i m in the saveimagesfunction')
     x = 1
     for image in imagesData:
         num = str(x)
@@ -120,6 +122,7 @@ def saveImagesbyCat(imagesData, currentCategory):
         with open(f'{folder}{output}', 'wb') as file:
             file.write(image_source.content)
         x = x + 1
+    
     
 
 def generateCsv(fileNameForCsv, booksdata):
