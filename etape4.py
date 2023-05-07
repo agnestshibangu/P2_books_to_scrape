@@ -64,21 +64,18 @@ for linkcategory in linkscategory:
             if url != urlAllBooks:
                 print('//////////// CETTE CATEGORIE A PLUSIEURS PAGES ///////////////')
                 functions.clickNextLink(singlebooklinks, url)
-                print(singlebooklinks)
+                #print(singlebooklinks)
         else:
             print('/////////// CETTE CATEGORIE N A QU UNE PAGE /////////////////')
             singlebooklinks = datapage.find_all('h3')
-            print(singlebooklinks)
+            #print(singlebooklinks)
         
         
-        
-        # for singlebooklink in singlebooklinks:
-        #     a = singlebooklink.find('a')
-        #     functions.catalogueLink(a,links)
-        # print('LINKS')
-        # print(links)
+        # formatting all h3 of a category into clicable links
+        for singlebooklink in singlebooklinks:
+            a = singlebooklink.find('a')
+            functions.catalogueLink(a,links)
 
-        '''        
         for link in links:
             singlebookdata = functions.retreiveAllTds(link)
             imagesData = functions.getSingleImageSrc(link, imagesData)
@@ -89,27 +86,12 @@ for linkcategory in linkscategory:
             booksdata.append(data)
         print(len(booksdata))
         print(booksdata)
-        booksdata = []
-        links = []
-        print(len(booksdata))
-        print(booksdata)
-        print('links empty')
-        print(links)
-        # print('///////// images data //////////////')
-        # print(imagesData)
-        # print('///////// length //////////')
-        # print(len(imagesData))
+    
 
-        '''
-        
-        '''
         functions.saveImagesbyCat(imagesData, currentCategory)
         imagesData.clear()
-        # print(len(imagesData))
-        # print('image data after cleaning')
-        # print(imagesData)
         fileNameForCsv = path + titleCat
         functions.generateCsv(fileNameForCsv, booksdata)
-        '''
+        
 
      
