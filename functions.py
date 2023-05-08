@@ -57,20 +57,22 @@ def getAllBooksTitleLoop(currentPage, singlebooklinks):
 def clickNextLink(singlebooklinks, url):
     i = 1
     NextAHref = 'page-' + str(i) + '.html'
-    #print('i am here')
-    #print(url)
+    print('i am here')
+    print(url)
     modifiedUrl = url.replace('index.html', '')
     currentPage = modifiedUrl + NextAHref
-    #print(currentPage)
     resp = requests.get(currentPage)
     if resp.ok:
+        print('ok')
+    '''
         currentPage = BeautifulSoup(resp.text, 'lxml')
+    
         getAllBooksTitleLoop(currentPage, singlebooklinks)
     while currentPage.find('li', {'class': 'next'}):
         nextLink = getNext(currentPage, modifiedUrl)
         currentPage = getData(nextLink)
         getAllBooksTitleLoop(currentPage, singlebooklinks)
-
+    '''
 
 #################
 
