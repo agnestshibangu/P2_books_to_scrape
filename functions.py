@@ -16,7 +16,7 @@ def generateHeaders():
     headersArray.append('title')
     headersArray.append('category')
     headersArray.append('product_page_url')
-    headersArray.append('product_description')
+    #headersArray.append('product_description')
     headersArray.append('image_url')
     headersArray.append('review_rating')
     print(headersArray)
@@ -105,10 +105,11 @@ def retreiveAllTds(link, currentCategory):
         title = soup.find('h1').text
         ###
         url = link
-        ###
-        description = soup.find('p', {'class': None}).text
-        if description is None: 
-            pass
+        ### 
+        # if soup.find('p', {'class': None}).text:
+        #     description = soup.find('p', {'class': None}).text
+        # else: 
+        #     description = 'no description'
         ###
         img = soup.find('img')
         toAddImgSrc = img['src']
@@ -121,7 +122,7 @@ def retreiveAllTds(link, currentCategory):
         singlebookdata.append(title)
         singlebookdata.append(category)
         singlebookdata.append(url)
-        singlebookdata.append(description)
+        #singlebookdata.append(description)
         singlebookdata.append(imageUrl)
         singlebookdata.append(reviewRating)
         return singlebookdata

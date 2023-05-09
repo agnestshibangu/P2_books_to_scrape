@@ -14,9 +14,11 @@ titleFile = functions.Horodatage()
 #### Étape 3 : Extraire toutes les données des produits d’une catégorie ####
 
 path = 'DATA/STEP3/'
-os.mkdir(path) 
+os.mkdir(path)
 
-url = 'https://books.toscrape.com/catalogue/category/books/travel_2/index.html'
+currentCategory = 'travel'
+
+url = 'https://books.toscrape.com/catalogue/category/books/classics_6/index.html'
 response = requests.get(url)
 
 booksdata = []
@@ -48,7 +50,7 @@ for singlebooklink in singlebooklinks:
     links = functions.catalogueLink(a,links)
     for link in links:
         #singlebookdata = functions.retreiveAllTds(link, currentCategoy)
-        singlebookdata = functions.retreiveAllTds(link)
+        singlebookdata = functions.retreiveAllTds(link, currentCategory)
     data = dict(zip(headersArray, singlebookdata))
     booksdata.append(data)
 
