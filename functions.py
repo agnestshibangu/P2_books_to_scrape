@@ -14,6 +14,11 @@ def generateHeaders():
     for header in headers:
         headersArray.append(header.text)
     headersArray.append('title')
+    headersArray.append('category')
+    headersArray.append('product_page_url')
+    headersArray.append('product_description')
+    headersArray.append('image_url')
+    headersArray.append('review_rating')
     print(headersArray)
     
 generateHeaders()
@@ -64,7 +69,6 @@ def clickNextLink(singlebooklinks, url):
     resp = requests.get(currentPage)
     if resp.ok:
         print('ok')
-    '''
         currentPage = BeautifulSoup(resp.text, 'lxml')
     
         getAllBooksTitleLoop(currentPage, singlebooklinks)
@@ -72,7 +76,6 @@ def clickNextLink(singlebooklinks, url):
         nextLink = getNext(currentPage, modifiedUrl)
         currentPage = getData(nextLink)
         getAllBooksTitleLoop(currentPage, singlebooklinks)
-    '''
 
 #################
 
@@ -86,7 +89,13 @@ def catalogueLink(a,links):
     return links
 
 
-def retreiveAllTds(link): 
+
+'''
+    headersArray.append('category')
+    headersArray.append('review_rating')
+'''
+
+def retreiveAllTds(link, currentCategory): 
     url = link.strip()
     response = requests.get(url)
     if response.ok:
@@ -94,9 +103,27 @@ def retreiveAllTds(link):
         tds = soup.find_all('td')
         singlebookdata = []
         title = soup.find('h1').text
+        ###
+        url = link
+        ###
+        description = soup.find('p', {'class': None}).text
+        if description is None: 
+            pass
+        ###
+        img = soup.find('img')
+        toAddImgSrc = img['src']
+        imageUrl = toAddImgSrc.replace('../../', 'http://books.toscrape.com/')
+        ###
+        category = currentCategory
+        reviewRating = soup.find('p', {'class': 'star-rating'})["class"][1]
         for td in tds:
             singlebookdata.append(td.text)
         singlebookdata.append(title)
+        singlebookdata.append(category)
+        singlebookdata.append(url)
+        singlebookdata.append(description)
+        singlebookdata.append(imageUrl)
+        singlebookdata.append(reviewRating)
         return singlebookdata
     
 def getSingleImageSrc(link, imagesData):

@@ -5,6 +5,10 @@ import os
 import functions
 from functions import headersArray
 
+
+print(headersArray)
+
+
 titleFile = functions.Horodatage() 
 
 #### Étape 3 : Extraire toutes les données des produits d’une catégorie ####
@@ -43,11 +47,11 @@ for singlebooklink in singlebooklinks:
     a = singlebooklink.find('a')
     links = functions.catalogueLink(a,links)
     for link in links:
+        #singlebookdata = functions.retreiveAllTds(link, currentCategoy)
         singlebookdata = functions.retreiveAllTds(link)
     data = dict(zip(headersArray, singlebookdata))
     booksdata.append(data)
 
     fileNameForCsv = path + titleFile + '-SingleCategoryBookData-file'
     functions.generateCsv(fileNameForCsv, booksdata)
-
 

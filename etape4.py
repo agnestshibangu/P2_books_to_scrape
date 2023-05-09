@@ -78,7 +78,7 @@ for linkcategory in linkscategory:
             functions.catalogueLink(a,links)
 
         for link in links:
-            singlebookdata = functions.retreiveAllTds(link)
+            singlebookdata = functions.retreiveAllTds(link, currentCategory)
             imagesData = functions.getSingleImageSrc(link, imagesData)
             #print(singlebookdata)
             if singlebookdata is None: 
